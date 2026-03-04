@@ -152,4 +152,4 @@ The frontend (`app.js`) uses this to update the speech output and the calendar l
   - Verify the Google credentials in `.env`.
   - Ensure the redirect URI in Google Cloud Console matches `GOOGLE_REDIRECT_URI`.
 
-**Author✍️ : Osama AT
+- **Author✍️ : Osama AT
