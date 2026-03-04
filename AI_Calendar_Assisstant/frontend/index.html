@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Voice Scheduling Agent</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #1f2937, #111827);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #1e1e2f;
+            padding: 40px;
+            border-radius: 16px;
+            width: 420px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        p {
+            opacity: 0.8;
+        }
+
+        .status {
+            margin: 15px 0;
+            font-size: 14px;
+            color: #10b981;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s ease;
+            width: 100%;
+        }
+
+        .mic-btn {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .mic-btn:hover {
+            background: #2563eb;
+        }
+
+        .google-btn {
+            background: #ef4444;
+            color: white;
+        }
+
+        .google-btn:hover {
+            background: #dc2626;
+        }
+
+        #output {
+            margin-top: 20px;
+            min-height: 40px;
+            padding: 10px;
+            background: #111827;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        #linkBox {
+            margin-top: 12px;
+            padding: 10px;
+            background: #111827;
+            border-radius: 8px;
+            display: none;
+            text-align: left;
+        }
+
+        #linkBoxLabel {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        #calendarLink {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.06);
+            color: white;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .link-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .link-btn {
+            width: 50%;
+            margin-top: 0;
+            background: #10b981;
+            color: white;
+        }
+
+        .link-btn:hover {
+            background: #059669;
+        }
+
+        .copy-btn {
+            background: #6b7280;
+        }
+
+        .copy-btn:hover {
+            background: #4b5563;
+        }
+
+        #linkBox {
+            margin-top: 12px;
+            padding: 10px;
+            background: #111827;
+            border-radius: 8px;
+            display: none;
+            text-align: left;
+        }
+
+        #linkBoxLabel {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        #calendarLink {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.06);
+            color: white;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .link-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .link-btn {
+            width: 50%;
+            margin-top: 0;
+            background: #10b981;
+            color: white;
+        }
+
+        .link-btn:hover {
+            background: #059669;
+        }
+
+        .copy-btn {
+            background: #6b7280;
+        }
+
+        .copy-btn:hover {
+            background: #4b5563;
+        }
+
+        #linkBox {
+            margin-top: 12px;
+            padding: 10px;
+            background: #111827;
+            border-radius: 8px;
+            display: none;
+            text-align: left;
+        }
+
+        #linkBoxLabel {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        #calendarLink {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.06);
+            color: white;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .link-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .link-btn {
+            width: 50%;
+            margin-top: 0;
+            background: #10b981;
+            color: white;
+        }
+
+        .link-btn:hover {
+            background: #059669;
+        }
+
+        .copy-btn {
+            background: #6b7280;
+        }
+
+        .copy-btn:hover {
+            background: #4b5563;
+        }
+
+        .footer {
+            margin-top: 25px;
+            font-size: 12px;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎙 Voice Scheduling Agent 🎙</h1>
+    <p>Schedule meetings with your voice in real time</p>
+
+    <div class="status" id="status">
+        🔴 Not authenticated
+    </div>
+
+    <!-- Google OAuth Login -->
+    <button id="loginBtn" class="google-btn" onclick="loginWithGoogle()">
+        🔐 Login with Google
+    </button>
+
+    <!-- Voice Button -->
+    <button class="mic-btn" onclick="startListening()">
+        🎤 Start Talking
+    </button>
+
+    <div id="output"></div>
+
+    <div id="linkBox">
+        <div id="linkBoxLabel">Google Calendar link</div>
+        <input id="calendarLink" type="text" readonly value="" />
+        <div class="link-actions">
+            <button class="link-btn" onclick="openCalendarLink()">Open</button>
+            <button class="link-btn copy-btn" onclick="copyCalendarLink()">Copy</button>
+        </div>
+    </div>
+
+    <div id="linkBox">
+        <div id="linkBoxLabel">Google Calendar link</div>
+        <input id="calendarLink" type="text" readonly value="" />
+        <div class="link-actions">
+            <button class="link-btn" onclick="openCalendarLink()">Open</button>
+            <button class="link-btn copy-btn" onclick="copyCalendarLink()">Copy</button>
+        </div>
+    </div>
+
+    <div id="linkBox">
+        <div id="linkBoxLabel">Google Calendar link</div>
+        <input id="calendarLink" type="text" readonly value="" />
+        <div class="link-actions">
+            <button class="link-btn" onclick="openCalendarLink()">Open</button>
+            <button class="link-btn copy-btn" onclick="copyCalendarLink()">Copy</button>
+        </div>
+    </div>
+
+    <div class="footer">
+        Built with FastAPI + Google Calendar
+    </div>
+</div>
+
+<script src="/static/app.js"></script>
+<script>
+    function loginWithGoogle() {
+        window.location.href = "http://localhost:8000/auth/login";
+    }
+</script>
+
+</body>
+</html>
